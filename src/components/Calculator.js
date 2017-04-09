@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import '../styles/Calculator.css';
 
 import sun from '../assets/sun.png';
@@ -7,11 +8,16 @@ export default class Calculator extends Component {
     state = {};
 
     tick() {
-        
+        let diff = (moment() - this.state.todayStart) / 1000;
+        let earned = (this.state.unitPerSecond * diff).toFixed(2);
+        let elapsed = this.state.todayStart.fromNow();
+        this.setState({ earned, elapsed })
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.tick, 1000);
+        if (this.state.working) {
+            this.interval = setInterval(this.tick.bind(this), 1000);
+        }
     }
 
     componentWillUnmount() {
@@ -21,8 +27,8 @@ export default class Calculator extends Component {
     componentWillMount() {
         let user = this.props.user;
         let todayState = this.calculateTodayState(user);
-        const { message, working } = todayState;
-        this.setState({ user, message, working });
+        const { message, working, unitPerSecond, todayStart } = todayState;
+        this.setState({ user, message, working, unitPerSecond, todayStart });
 
     }
 
@@ -31,23 +37,34 @@ export default class Calculator extends Component {
         let message = '';
         let working = false;
         let day = now.getDay();
+        let unitPerSecond = 0;
+
+        let todayStart = moment(`${moment().format("YYYY-MM-DD")} ${user.start}`);
+        let diff = (moment() - todayStart) / 1000;
+
         if (day === 0 || user.week < day) {
             message = `Today is not a working day, ${user.name}`;
+        } else if (diff > (3600 * user.hours)) {
+            message = `You finished working for today, ${user.name}`;
         } else {
             working = true;
             message = `Work Day ${now.getDay()} / ${user.week}`;
+            let unitPerWeek = user.net / 4;
+            let unitPerDay = unitPerWeek / user.week;
+            let unitPerHour = unitPerDay / user.hours;
+            unitPerSecond = unitPerHour / 3600;
         }
-        
 
-        return { message, working };
+
+        return { message, working, todayStart, unitPerSecond };
     }
 
     renderTodayRTPay() {
         if (this.state.working) {
             return (
                 <div>
-                    <h2>You have been working for {this.state.workingHours}</h2>
-                    <h2>So far you have earned {this.state.moneyEarned} (£,€,$)</h2>
+                    <h3>You started working: {this.state.elapsed}</h3>
+                    <h3>Today's earnings: {this.state.earned} £</h3>
                 </div>
             );
         }
