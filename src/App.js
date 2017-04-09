@@ -17,10 +17,14 @@ class App extends Component {
     }
   }
 
-  logout(e){
+  logout(e) {
     e.preventDefault();
     localStorage.removeItem('userInfo');
     location.reload();
+  }
+
+  openRepo() {
+    window.location.href = 'https://github.com/vikkio88/agghia';
   }
 
   renderUserInfo() {
@@ -51,7 +55,7 @@ class App extends Component {
       <div className="App">
         <div className="header">
           <div>
-            <img src={logo} className="logo" alt="logo" />
+            <img onClick={this.openRepo} src={logo} className="logo" alt="logo" />
           </div>
           <div className="header-content">
           </div>
