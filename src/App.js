@@ -54,7 +54,6 @@ class App extends Component {
             <img src={logo} className="logo" alt="logo" />
           </div>
           <div className="header-content">
-            Agghia
           </div>
           {this.renderLogout()}
         </div>

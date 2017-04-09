@@ -2,6 +2,14 @@
   height: 60px;
 }
 
+.logo:hover {
+  height: 61px;
+  background-color: #456173;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50px;
+}
+
 .header {
   background-color: #1B3C59;
   height: 70px;
@@ -14,13 +22,14 @@
 }
 
 .header-content {
-  padding: 30px;
+  padding: 15px;
   flex:1;
   display: flex;
   justify-content: center;
 }
 
 .logout {
+  font-size: 20px;
   padding: 30px;
 }
 
