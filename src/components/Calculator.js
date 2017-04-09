@@ -44,6 +44,8 @@ export default class Calculator extends Component {
 
         if (day === 0 || user.week < day) {
             message = `Today is not a working day, ${user.name}`;
+        } else if (diff < 0) {
+            message = `You will start work ${todayStart.fromNow()}`;
         } else if (diff > (3600 * user.hours)) {
             message = `You finished working for today, ${user.name}`;
         } else {
