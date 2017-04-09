@@ -31,7 +31,7 @@ export default class Calculator extends Component {
         let message = '';
         let working = false;
         let day = now.getDay();
-        if (day === 1 || user.week < day) {
+        if (day === 0 || user.week < day) {
             message = `Today is not a working day, ${user.name}`;
         } else {
             working = true;
@@ -47,7 +47,7 @@ export default class Calculator extends Component {
             return (
                 <div>
                     <h2>You have been working for {this.state.workingHours}</h2>
-                    <h2>You earned {this.state.moneyEarned} (£,€,$)</h2>
+                    <h2>So far you have earned {this.state.moneyEarned} (£,€,$)</h2>
                 </div>
             );
         }
