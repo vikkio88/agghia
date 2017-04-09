@@ -1,0 +1,20 @@
+.container {
+    margin-top:20px;
+    width: 800px;
+    box-shadow: 2px 2px 2px #1B3C59;
+}
+.head{
+    padding: 20px;
+    border: 3px solid #F2F2F0;
+}
+.user-form {
+    border: 3px solid #F2F2F0;
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-form input{
+    margin: 5px;
+}
