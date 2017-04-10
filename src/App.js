@@ -5,7 +5,7 @@ import './styles/App.css';
 import UserForm from './components/UserForm';
 import Calculator from './components/Calculator';
 
-import { configs } from '../libs';
+import { configs } from './libs';
 const { userStorageKey } = configs;
 
 class App extends Component {
