@@ -9,7 +9,7 @@ export default class Calculator extends Component {
 
     tick() {
         let diff = (moment() - this.state.todayStart) / 1000;
-        let earned = (this.state.unitPerSecond * diff).toFixed(2);
+        let earned = (this.state.user.units.perSecond * diff).toFixed(2);
         let elapsed = this.state.todayStart.fromNow();
         this.setState({ earned, elapsed })
     }
@@ -27,8 +27,8 @@ export default class Calculator extends Component {
     componentWillMount() {
         let user = this.props.user;
         let todayState = this.calculateTodayState(user);
-        const { message, working, unitPerSecond, todayStart } = todayState;
-        this.setState({ user, message, working, unitPerSecond, todayStart });
+        const { message, working, todayStart } = todayState;
+        this.setState({ user, message, working, todayStart });
 
     }
 
@@ -37,28 +37,23 @@ export default class Calculator extends Component {
         let message = '';
         let working = false;
         let day = now.getDay();
-        let unitPerSecond = 0;
 
         let todayStart = moment(`${moment().format("YYYY-MM-DD")} ${user.start}`);
         let diff = (moment() - todayStart) / 1000;
 
         if (day === 0 || user.week < day) {
-            message = `Today is not a working day, ${user.name}`;
+            message = `Today is not a working day, this week you earned £${user.units.perWeek}`;
         } else if (diff < 0) {
-            message = `You will start work ${todayStart.fromNow()}`;
+            message = `Good Morning ${user.name}, so far this week you have earned £${user.units.perDay * day}`;
         } else if (diff > (3600 * user.hours)) {
-            message = `You finished working for today, ${user.name}`;
+            message = `No more working for today, you earned £${user.units.perDay}`;
         } else {
             working = true;
             message = `Work Day ${now.getDay()} / ${user.week}`;
-            let unitPerWeek = user.net / 4;
-            let unitPerDay = unitPerWeek / user.week;
-            let unitPerHour = unitPerDay / user.hours;
-            unitPerSecond = unitPerHour / 3600;
         }
 
 
-        return { message, working, todayStart, unitPerSecond };
+        return { message, working, todayStart };
     }
 
     renderTodayRTPay() {
@@ -66,7 +61,7 @@ export default class Calculator extends Component {
             return (
                 <div>
                     <h3>You started working: {this.state.elapsed}</h3>
-                    <h3>Today's earnings: {this.state.earned} £</h3>
+                    <h3>Today's earnings so far: £{this.state.earned}</h3>
                 </div>
             );
         }
@@ -80,7 +75,7 @@ export default class Calculator extends Component {
         return (
             <div className="calculator">
 
-                <h1>{this.state.message}</h1>
+                <h2>{this.state.message}</h2>
                 {this.renderTodayRTPay()}
             </div>
         );
