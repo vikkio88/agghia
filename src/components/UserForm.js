@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
 import '../styles/UserForm.css';
 
+import { configs } from '../libs';
+const { userStorageKey } = configs;
+
 export default class UserForm extends Component {
     saveUser(e) {
         e.preventDefault();
+        let net = document.getElementById('net').value;
+        let week = document.getElementById('week').value;
+        let hours = document.getElementById('hours').value;
+        let perWeek = net / 4;
+        let perDay = (perWeek / week).toFixed(2);
+        let perHour = perDay / hours;
+        let perSecond = perHour / 3600;
+
         let user = {
             name: document.getElementById('name').value,
-            net: document.getElementById('net').value,
-            hours: document.getElementById('hours').value,
-            week: document.getElementById('week').value,
-            start: document.getElementById('start').value
+            net,
+            week,
+            hours,
+            start: document.getElementById('start').value,
+            units: {
+                perWeek,
+                perDay,
+                perHour,
+                perSecond
+            }
         };
-        localStorage.setItem('userInfo', JSON.stringify(user));
+        localStorage.setItem(userStorageKey, JSON.stringify(user));
         location.reload();
     }
 
@@ -19,8 +36,8 @@ export default class UserForm extends Component {
         return (
             <div className="container">
                 <div className="head">
-                <h1>Agghia</h1>
-                <h3>this small silly utility will calculate in real time, your income</h3>
+                    <h1>Agghia</h1>
+                    <h3>this small silly utility will calculate in real time, your income</h3>
                 </div>
                 <form onSubmit={this.saveUser} className="user-form">
                     <label>Name</label>
