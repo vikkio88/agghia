@@ -1,5 +1,6 @@
 # agghia
-small react app to calculate earning in real time.
+![forevah](https://cloud.githubusercontent.com/assets/248805/24879042/66a5cf86-1e2d-11e7-939c-fd059915928f.jpg)
+small react app to calculate earning in real time, if you have a fulltime job.
 
 this project is hosted on [surge](https://agghia.surge.sh/)
 
