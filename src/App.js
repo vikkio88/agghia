@@ -22,7 +22,7 @@ class App extends Component {
 
   logout(e) {
     e.preventDefault();
-    localStorage.removeItem('userInfo');
+    localStorage.removeItem(userStorageKey);
     location.reload();
   }
 
