@@ -5,13 +5,16 @@ import './styles/App.css';
 import UserForm from './components/UserForm';
 import Calculator from './components/Calculator';
 
+import { configs } from '../libs';
+const { userStorageKey } = configs;
+
 class App extends Component {
   state = {
     userInfo: null
   };
 
   componentWillMount() {
-    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    let userInfo = JSON.parse(localStorage.getItem(userStorageKey));
     if (userInfo) {
       this.setState({ userInfo });
     }
