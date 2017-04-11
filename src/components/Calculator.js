@@ -43,10 +43,12 @@ export default class Calculator extends Component {
 
         if (day === 0 || user.week < day) {
             message = `Today is not a working day, this week you earned £${user.units.perWeek}`;
+        } else if (day === 1) {
+            message = `Good Monday ${user.name}, this week you will earn £${user.units.perWeek * (day - 1)}`;
         } else if (diff < 0) {
-            message = `Good Morning ${user.name}, so far this week you have earned £${user.units.perDay * day}`;
+            message = `Good Morning ${user.name}, so far this week you have earned £${user.units.perDay * (day - 1)}`;
         } else if (diff > (3600 * user.hours)) {
-            message = `No more working for today, you earned £${user.units.perDay}`;
+            message = `No more working for today, you earned £${user.units.perDay} today (£${user.units.perDay * day} so far this week)`;
         } else {
             working = true;
             message = `Work Day ${now.getDay()} / ${user.week}`;
@@ -75,7 +77,7 @@ export default class Calculator extends Component {
         return (
             <div className="calculator">
 
-                <h2>{this.state.message}</h2>
+                <h3>{this.state.message}</h3>
                 {this.renderTodayRTPay()}
             </div>
         );
