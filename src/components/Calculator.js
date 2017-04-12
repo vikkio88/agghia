@@ -40,6 +40,8 @@ export default class Calculator extends Component {
 
         let todayStart = moment(`${moment().format("YYYY-MM-DD")} ${user.start}`);
         let diff = (moment() - todayStart) / 1000;
+        //quick fix #3
+        user.units.perDay = parseInt(user.units.perDay).toFixed(2);
 
         if (day === 0 || user.week < day) {
             message = `Today is not a working day, this week you earned £${user.units.perWeek}`;
